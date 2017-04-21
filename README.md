@@ -78,6 +78,7 @@
 - 修改db.properties文件，更新MySQL账号和密码
 - Eclipse、IDEA运行RenrenApplication.java，则可启动项目
 - 项目访问路径：http://localhost
+- API文档路径：http://localhost/swagger-ui.html
 - 账号密码：admin/admin
 
 
