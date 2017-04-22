@@ -44,7 +44,7 @@ public class ShiroConfig {
         return securityManager;
     }
 
-    @Bean
+    @Bean("shiroFilter")
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
         shiroFilter.setSecurityManager(securityManager);
