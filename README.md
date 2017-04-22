@@ -64,7 +64,7 @@
 
 
  **软件需求** 
-- JDK1.7+
+- JDK1.8+
 - MySQL5.5+
 - Tomcat7.0+
 - Maven3.0+
@@ -73,9 +73,9 @@
 
  **本地部署**
 - 通过git下载源码
-- 创建数据库renren-security，数据库编码为UTF-8
-- 执行doc/db.sql文件，初始化数据【按需导入表结构及数据】
-- 修改db.properties文件，更新MySQL账号和密码
+- 创建数据库renren-security-boot，数据库编码为UTF-8
+- 执行doc/db.sql文件，初始化数据
+- 修改application.properties文件，更新MySQL账号和密码
 - Eclipse、IDEA运行RenrenApplication.java，则可启动项目
 - 项目访问路径：http://localhost
 - API文档路径：http://localhost/swagger-ui.html
