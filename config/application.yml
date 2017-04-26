@@ -1,0 +1,31 @@
+# Tomcat
+server:
+    tomcat:
+        max-threads: 1000
+        min-spare-threads: 30
+    port: 8080
+
+# mysql
+spring:
+    # \u73AF\u5883 dev|test|pro
+    profiles:
+        active: dev
+    datasource:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.jdbc.Driver
+        # jackson\u65F6\u95F4\u683C\u5F0F\u5316
+    jackson:
+        time-zone: GMT+8
+        date-format: yyyy-MM-dd HH:mm:ss
+    thymeleaf:
+        cache: false
+# \u521D\u59CB\u5316\u5927\u5C0F\uFF0C\u6700\u5927\uFF0C\u6700\u5C0F
+druid:
+    pool:
+        initialSize: 10
+        maxActive: 100
+        minIdle: 10
+
+#logging.level.io.renren=DEBUG
+
+

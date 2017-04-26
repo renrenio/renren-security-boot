@@ -1,0 +1,4 @@
+# Mybatis\u914D\u7F6E
+mybatis:
+    mapperLocations: classpath:mapper/*.xml
+    configLocation: classpath:mybatis.xml
