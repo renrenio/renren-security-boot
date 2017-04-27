@@ -1,7 +1,6 @@
 package io.renren.config;
 
 import io.renren.utils.xss.XssFilter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +16,6 @@ import javax.servlet.DispatcherType;
  * @date 2017-04-21 21:56
  */
 @Configuration
-@ConfigurationProperties
 public class FilterConfig {
 
     @Bean
