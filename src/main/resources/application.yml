@@ -19,12 +19,6 @@ spring:
         date-format: yyyy-MM-dd HH:mm:ss
     thymeleaf:
         cache: false
-# 初始化大小，最大，最小
-druid:
-    pool:
-        initialSize: 10
-        maxActive: 100
-        minIdle: 10
 
 # Mybatis配置
 mybatis:
