@@ -28,12 +28,13 @@ public class SysRoleMenuServiceImpl implements SysRoleMenuService {
 	@Override
 	@Transactional
 	public void saveOrUpdate(Long roleId, List<Long> menuIdList) {
+		//先删除角色与菜单关系
+		sysRoleMenuDao.delete(roleId);
+
 		if(menuIdList.size() == 0){
 			return ;
 		}
-		//先删除角色与菜单关系
-		sysRoleMenuDao.delete(roleId);
-		
+
 		//保存角色与菜单关系
 		Map<String, Object> map = new HashMap<>();
 		map.put("roleId", roleId);
