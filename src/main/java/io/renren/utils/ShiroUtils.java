@@ -47,9 +47,12 @@ public class ShiroUtils {
 	}
 	
 	public static String getKaptcha(String key) {
-		String kaptcha = getSessionAttribute(key).toString();
+		Object kaptcha = getSessionAttribute(key);
+		if(kaptcha == null){
+			throw new RRException("验证码已失效");
+		}
 		getSession().removeAttribute(key);
-		return kaptcha;
+		return kaptcha.toString();
 	}
 
 }

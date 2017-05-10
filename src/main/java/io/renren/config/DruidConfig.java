@@ -1,7 +1,11 @@
 package io.renren.config;
 
+import com.alibaba.druid.filter.Filter;
+import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
+import com.alibaba.druid.wall.WallConfig;
+import com.alibaba.druid.wall.WallFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,9 +13,11 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Druid配置
@@ -109,16 +115,16 @@ public class DruidConfig {
         if(maxPoolPreparedStatementPerConnectionSize != null) {
             datasource.setMaxPoolPreparedStatementPerConnectionSize(maxPoolPreparedStatementPerConnectionSize);
         }
-        if(filters != null) {
-            try {
-                datasource.setFilters(filters);
-            } catch (SQLException e) {
-                logger.error("druid configuration initialization filter", e);
-            }
-        }
+
         if(connectionProperties != null) {
             datasource.setConnectionProperties(connectionProperties);
         }
+
+        List<Filter> filters = new ArrayList<>();
+        filters.add(statFilter());
+        filters.add(wallFilter());
+        datasource.setProxyFilters(filters);
+
         return datasource;
     }
 
@@ -128,5 +134,33 @@ public class DruidConfig {
         servletRegistrationBean.setServlet(new StatViewServlet());
         servletRegistrationBean.addUrlMappings("/druid/*");
         return servletRegistrationBean;
+    }
+
+    @Bean
+    public StatFilter statFilter(){
+        StatFilter statFilter = new StatFilter();
+        statFilter.setLogSlowSql(true);
+        statFilter.setMergeSql(true);
+        statFilter.setSlowSqlMillis(1000);
+
+        return statFilter;
+    }
+
+    @Bean
+    public WallFilter wallFilter(){
+        WallFilter wallFilter = new WallFilter();
+
+        //允许执行多条SQL
+        WallConfig config = new WallConfig();
+        config.setMultiStatementAllow(true);
+        wallFilter.setConfig(config);
+
+        return wallFilter;
+    }
+
+    @Bean
+    @Primary
+    public DataSourceTransactionManager transactionManager() {
+        return new DataSourceTransactionManager(dataSource());
     }
 }
