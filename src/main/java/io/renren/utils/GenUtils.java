@@ -74,7 +74,7 @@ public class GenUtils {
 			columnEntity.setAttrname(StringUtils.uncapitalize(attrName));
 			
 			//列的数据类型，转换成Java类型
-			String attrType = config.getString(columnEntity.getDataType(), "unknowType");
+			String attrType = config.getString(columnEntity.getDataType(), Object.class.getSimpleName());
 			columnEntity.setAttrType(attrType);
 			
 			//是否主键
