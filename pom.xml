@@ -35,6 +35,12 @@
 		<aliyun.oss.version>2.5.0</aliyun.oss.version>
 		<qcloud.cos.version>4.4</qcloud.cos.version>
 		<velocity.version>1.7</velocity.version>
+        <!--wagon plugin 配置-->
+		<service-path>deploy_path</service-path>
+		<pack-name>full_jar_name</pack-name>
+		<remote-addr>remote_host_ip</remote-addr>
+		<remote-passwd>remote_host_password</remote-passwd>
+		<remote-username>remote_host_username</remote-username>
 	</properties>
 
 	<dependencies>
@@ -188,6 +194,28 @@
 					<fork>true</fork>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>wagon-maven-plugin</artifactId>
+				<version>1.0</version>
+				<configuration>
+					<fromFile>target/${pack-name}</fromFile>
+					<url><![CDATA[scp://${remote-username}:${remote-passwd}@${remote-addr}${service-path}]]></url>
+					<commands>
+						<!-- Kill Old Process -->
+						<command>pkill -f ${pack-name}</command>
+						<command>rm -f ${service-path}/nohup.out</command>
+						<!-- Restart jar package，write result into nohup.out -->
+						<command><![CDATA[nohup java -jar ${service-path}/${pack-name} > ${service-path}/nohup.out 2>&1 & ]]></command>
+						<command><![CDATA[netstat -nptl]]></command>
+						<command><![CDATA[ps -ef | grep java | grep -v grep]]></command>
+					</commands>
+					<!-- 运行命令 mvn clean package wagon:upload-single wagon:sshexec-->
+					<displayCommandOutputs>true</displayCommandOutputs>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
