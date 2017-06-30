@@ -1,4 +1,4 @@
-**renren-security-boot项目全面升级到[renren-fast](http://git.oschina.net/babaio/renren-fast)项目，非常感谢大家的支持！**
+<h1>renren-security-boot项目全面升级到[renren-fast](http://git.oschina.net/babaio/renren-fast)项目，非常感谢大家的支持！</h1>
 
 **项目说明** 
 - renren-security-boot是基于[renren-security](http://git.oschina.net/babaio/renren-security)，用Spring Boot实现的J2EE快速开发平台
