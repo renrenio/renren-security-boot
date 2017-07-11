@@ -1,5 +1,6 @@
 package io.renren.config;
 
+import java.sql.SQLException;
 import com.alibaba.druid.filter.Filter;
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.pool.DruidDataSource;
@@ -65,7 +66,7 @@ public class DruidConfig {
     private Integer maxPoolPreparedStatementPerConnectionSize;
     @Value("${spring.datasource.filters:#{null}}")
     private String filters;
-    @Value("{spring.datasource.connectionProperties:#{null}}")
+    @Value("${spring.datasource.connectionProperties:#{null}}")
     private String connectionProperties;
 
     @Bean     //声明其为Bean实例
@@ -118,6 +119,14 @@ public class DruidConfig {
 
         if(connectionProperties != null) {
             datasource.setConnectionProperties(connectionProperties);
+        }
+        
+        if (filters != null) {
+        	try {
+        		datasource.setFilters(filters);
+        	} catch (SQLException e) {
+        		logger.warn("", e);
+        	}
         }
 
         List<Filter> filters = new ArrayList<>();
